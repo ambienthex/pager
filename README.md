@@ -45,13 +45,15 @@ file access and size.
 3. docker ps
 4.navigate to http://localhost:49160
 
-Errors by Service Pie Chart:
+## Errors by Service Pie Chart:
 ![image](https://raw.githubusercontent.com/ambienthex/pager/master/images/img0001.png)
 
-Errors by Instance Pie Chart:
+## Errors by Instance Pie Chart:
 ![image](https://raw.githubusercontent.com/ambienthex/pager/master/images/img0002.png)
 
-Aggregate Errors by Hour Line Chart:
+## Aggregate Errors by Hour Line Chart:
 ![image](https://raw.githubusercontent.com/ambienthex/pager/master/images/img0003.png)
 
+## Raw relevant error logs
+![image](https://raw.githubusercontent.com/ambienthex/pager/master/images/img0004.png)
 
