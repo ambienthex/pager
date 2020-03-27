@@ -1,0 +1,77 @@
+ <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  </head>
+  <body>
+    <style>
+      .chart {
+        width:900px;
+        height:500px;
+      }
+      body {
+        font-family: arial;
+      }
+      table td{
+          border: 1px solid #ddd;
+          padding: 8px;
+      }
+    </style>
+    <div id="errorsByService" class="chart"></div>
+    <div id="errorsByInstance" class="chart"></div>
+    <div id="errorsTimeSeries" class="chart"></div>
+    <div id="mostProblematicInstance"><span id="instance"></span></div>
+    <table id="table"></table>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawCharts);
+
+      function drawCharts() {
+        fetch('data')
+          .then(response => {
+            return response.json();
+          }).then(data => {
+            console.log(data);
+            renderChart('Errors By Service', ['Service', 'Error Count'], data.errorsByServiceName, 'errorsByService');
+            renderChart('Errors By Instance', ['Instance', 'Error Count'], data.errorsByInstance, 'errorsByInstance');
+            renderChart('Aggregate Errors By Hour', ['Hour', 'Error Count'], data.errorTimeSeriesHourData, 'errorsTimeSeries', true);
+            renderRawData(data.rawData);
+            let span = document.getElementById("mostProblematicInstance");
+            span.appendChild(document.createTextNode(`Most problematic instance is ${data.mostProblematicnode.node} with  ${data.mostProblematicnode.errorCount} errors.`));
+          });
+      }
+
+      function renderChart(title, headers, data, id, bLineGraph = false) {
+         let chartDataArray = [];
+         let chart = null;
+         chartDataArray.push(headers);
+         for (const property in data) {
+            const item = [property, data[property]];
+            chartDataArray.push(item);
+         }
+         const chartdata = google.visualization.arrayToDataTable(chartDataArray);
+         const options = {title: title};
+         if (bLineGraph) {
+          chart = new google.visualization.LineChart(document.getElementById(id));
+         } else {
+           chart = new google.visualization.PieChart(document.getElementById(id));
+        }
+         chart.draw(chartdata, options);
+      }
+
+
+      function renderRawData(tableData) {
+        var table = document.getElementById('table');
+        for (var i = 0; i < tableData.length; i++) {
+          const row = document.createElement('tr');
+          const cell1 = document.createElement('td');
+          const cell2 = document.createElement('td');
+          cell2.textContent = i+1;
+          row.appendChild(cell2);
+          cell1.textContent = tableData[i];
+          row.appendChild(cell1);
+          table.appendChild(row);
+        }
+      }
+
+    </script>
+
+  </body>
