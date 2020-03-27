@@ -33,10 +33,11 @@ file access and size.
 # Solution
     
 ## Basic Instructions:
-1. unzip homework.zip
-2. npm install
-3. node index.js
-4. navigate to http://localhost:5000/ to see the log stats
+1. git clone git@github.com:ambienthex/pager.git
+2. cd pager
+3. npm install
+4. node index.js
+5. navigate to http://localhost:5000/ to see the log stats
 
 ## Dockerization Instructions:
 
